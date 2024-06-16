@@ -23,6 +23,7 @@ def divide_image(img, output_path):
 def main(input_path, output_path):
     for filename in os.listdir(input_path): 
         imginput_path = os.path.join(input_path, filename)
+        print(imginput_path)
         img = Image.open(imginput_path)
         divide_image(img, output_path)
     
