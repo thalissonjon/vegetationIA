@@ -2,9 +2,9 @@ from PIL import Image
 import argparse
 import os
 
-def divide_image(img, output_path):
-    tileW, tileH = 256, 256
-    imgW, imgH = img.size
+def divide_image(img, output_path, img_name):
+    tileW, tileH = 256, 256 # Tamanho dos chunks
+    imgW, imgH = img.size # Tamanho total da imagem
 
     for top in range(0, imgH, tileH):
         for left in range(0, imgW, tileW):
@@ -12,9 +12,9 @@ def divide_image(img, output_path):
             bottom = min(top + tileH, imgH)
 
             if abs(bottom-top) == tileH and abs(left-right) == tileW:
-                box = (left, top, right, bottom)
+                box = (left, top, right, bottom) 
                 tile = img.crop(box)
-                tile.save(f"{output_path}/tile_{top}_{left}.png")
+                tile.save(f"{output_path}/tile_{img_name}_{top}_{left}.png")
         
         else:
             print(f'Imagem não salva. {top}.{left}')
@@ -25,7 +25,8 @@ def main(input_path, output_path):
         imginput_path = os.path.join(input_path, filename)
         print(imginput_path)
         img = Image.open(imginput_path)
-        divide_image(img, output_path)
+        img_name = os.path.basename(imginput_path)
+        divide_image(img, output_path, img_name)
     
 
 if __name__ == '__main__':

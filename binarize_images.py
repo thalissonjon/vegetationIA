@@ -6,11 +6,11 @@ import os
 
 def binarize_image(img, output_path):
     gr_image = img[:,:,1]  
-    _, binary_image = cv2.threshold(gr_image, 80, 255, cv2.THRESH_BINARY)
-    # binary_image = cv2.adaptiveThreshold(gr_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 2)
+    _, binary_image = cv2.threshold(gr_image, 90, 255, cv2.THRESH_BINARY)
+    # binary_image = cv2.adaptiveThreshold(gr_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 105, 3)
     binary_image = cv2.medianBlur(binary_image, 5)
 
-    # binary_image = cv2.bitwise_not(binary_image) # invertendo
+    binary_image = cv2.bitwise_not(binary_image) # invertendo
     cv2.imwrite(output_path, binary_image)
 
 def main(input_path, output_path):
@@ -22,7 +22,7 @@ def main(input_path, output_path):
         binarize_image(img, imgoutput_path)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Dividir imagem em chunks menores.")
+    parser = argparse.ArgumentParser(description="Binarizar imagens.")
     parser.add_argument('--input', type=str, required=True, help='Path para a pasta de input.')
     parser.add_argument('--output', type=str, required=True, help='Path para a pasta de output.')
     args = parser.parse_args()
