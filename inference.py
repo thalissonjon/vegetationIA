@@ -4,9 +4,14 @@ import cv2
 from tensorflow import keras
 import numpy as np
 from matplotlib import pyplot as plt
+import segmentation_models as sm
 
 def inference(img, model_path, output_path):
     model = keras.models.load_model(model_path)
+
+    preprocess_input = sm.get_preprocessing('resnet34')  # Use o mesmo backbone definido no treinamento
+    img = preprocess_input(img)
+
     predict = model.predict(img)
 
     predict = np.squeeze(predict, axis=0) # remover a primeira dimensão
@@ -28,6 +33,7 @@ def main(rgb_path, model_path, output_path):
         imgoutput_path = os.path.join(output_path, filename)
 
         img = cv2.imread(imginput_path, cv2.IMREAD_COLOR)
+        # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = cv2.resize(img, (256, 256))
         img = np.expand_dims(img, axis=0)
 

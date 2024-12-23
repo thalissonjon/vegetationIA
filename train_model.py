@@ -52,7 +52,7 @@ def train(rgb_path, groundtruth, model_path):
 
     X = train_images
     Y = train_masks
-    Y = np.expand_dims(Y, axis=3) # Talvez sejá necessário para utilizar como entrada da rede
+    Y = np.expand_dims(Y, axis=3) # Talvez seja necessário para utilizar como entrada da rede
     # print(X.shape)
     # print(Y.shape)
 
